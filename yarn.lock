@@ -131,6 +131,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sveltejs/adapter-node@npm:next":
+  version: 1.0.0-next.43
+  resolution: "@sveltejs/adapter-node@npm:1.0.0-next.43"
+  dependencies:
+    esbuild: ^0.12.5
+    tiny-glob: ^0.2.9
+  checksum: 1c4738744481ee7dccf4931d91273a94cd84b3e5844b89a7082cf5cf401f93d4341cda3c85f809333e24620bdada16b6791996d0594ae7055854f681815bab9c
+  languageName: node
+  linkType: hard
+
 "@sveltejs/kit@npm:next":
   version: 1.0.0-next.158
   resolution: "@sveltejs/kit@npm:1.0.0-next.158"
@@ -781,7 +791,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild@npm:^0.12.17":
+"esbuild@npm:^0.12.17, esbuild@npm:^0.12.5":
   version: 0.12.23
   resolution: "esbuild@npm:0.12.23"
   bin:
@@ -1160,6 +1170,13 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
+"globalyzer@npm:0.1.0":
+  version: 0.1.0
+  resolution: "globalyzer@npm:0.1.0"
+  checksum: 419a0f95ba542534fac0842964d31b3dc2936a479b2b1a8a62bad7e8b61054faa9b0a06ad9f2e12593396b9b2621cac93358d9b3071d33723fb1778608d358a1
+  languageName: node
+  linkType: hard
+
 "globby@npm:^11.0.3":
   version: 11.0.4
   resolution: "globby@npm:11.0.4"
@@ -1171,6 +1188,13 @@ fsevents@~2.3.2:
     merge2: ^1.3.0
     slash: ^3.0.0
   checksum: d3e02d5e459e02ffa578b45f040381c33e3c0538ed99b958f0809230c423337999867d7b0dbf752ce93c46157d3bbf154d3fff988a93ccaeb627df8e1841775b
+  languageName: node
+  linkType: hard
+
+"globrex@npm:^0.1.2":
+  version: 0.1.2
+  resolution: "globrex@npm:0.1.2"
+  checksum: adca162494a176ce9ecf4dd232f7b802956bb1966b37f60c15e49d2e7d961b66c60826366dc2649093cad5a0d69970cfa8875bd1695b5a1a2f33dcd2aa88da3c
   languageName: node
   linkType: hard
 
@@ -1455,6 +1479,7 @@ fsevents@~2.3.2:
   version: 0.0.0-use.local
   resolution: "keyserver@workspace:."
   dependencies:
+    "@sveltejs/adapter-node": next
     "@sveltejs/kit": next
     "@typescript-eslint/eslint-plugin": ^4.19.0
     "@typescript-eslint/parser": ^4.19.0
@@ -2413,6 +2438,16 @@ resolve@^1.20.0:
   version: 0.2.0
   resolution: "text-table@npm:0.2.0"
   checksum: b6937a38c80c7f84d9c11dd75e49d5c44f71d95e810a3250bd1f1797fc7117c57698204adf676b71497acc205d769d65c16ae8fa10afad832ae1322630aef10a
+  languageName: node
+  linkType: hard
+
+"tiny-glob@npm:^0.2.9":
+  version: 0.2.9
+  resolution: "tiny-glob@npm:0.2.9"
+  dependencies:
+    globalyzer: 0.1.0
+    globrex: ^0.1.2
+  checksum: aea5801eb6663ddf77ebb74900b8f8bd9dfcfc9b6a1cc8018cb7421590c00bf446109ff45e4b64a98e6c95ddb1255a337a5d488fb6311930e2a95334151ec9c6
   languageName: node
   linkType: hard
 
