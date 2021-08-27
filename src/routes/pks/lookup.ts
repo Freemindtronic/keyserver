@@ -1,4 +1,5 @@
 import type { RequestHandler } from '@sveltejs/kit'
+import { PrismaClient } from '@prisma/client'
 
 export const get: RequestHandler = async ({ query }) => {
   if (!query.has('op') || !query.has('search')) {
@@ -15,9 +16,13 @@ export const get: RequestHandler = async ({ query }) => {
   )
   const options = new Set(optionsString.split(',').filter(Boolean))
 
+  const prisma = new PrismaClient()
+  const keys = await prisma.keys.findMany()
+  prisma.$disconnect()
+
   return {
     body: `Operation: ${op}\nSearch terms: ${search}\nOptions: ${
       options.size > 0 ? [...options.values()].join(', ') : '*none*'
-    }`,
+    }\n${JSON.stringify(keys)}`,
   }
 }
