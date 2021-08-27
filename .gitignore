@@ -65,8 +65,14 @@ typings/
 # Output of 'npm pack'
 *.tgz
 
-# Yarn Integrity file
-.yarn-integrity
+# Yarn
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
 
 # dotenv environment variables file
 .env
@@ -102,3 +108,8 @@ dist
 
 # TernJS port file
 .tern-port
+
+# SvelteKit
+/build
+/.svelte-kit
+/package
