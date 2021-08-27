@@ -583,7 +583,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chokidar@npm:^3.4.1":
+"chokidar@npm:>=3.0.0 <4.0.0, chokidar@npm:^3.4.1":
   version: 3.5.2
   resolution: "chokidar@npm:3.5.2"
   dependencies:
@@ -1488,6 +1488,7 @@ fsevents@~2.3.2:
     eslint-plugin-svelte3: ^3.2.0
     prettier: ~2.2.1
     prettier-plugin-svelte: ^2.2.0
+    sass: ^1.38.1
     svelte: ^3.34.0
     svelte-check: ^2.0.0
     svelte-preprocess: ^4.0.0
@@ -2093,6 +2094,17 @@ resolve@^1.20.0:
   version: 2.1.2
   resolution: "safer-buffer@npm:2.1.2"
   checksum: cab8f25ae6f1434abee8d80023d7e72b598cf1327164ddab31003c51215526801e40b66c5e65d658a0af1e9d6478cadcb4c745f4bd6751f97d8644786c0978b0
+  languageName: node
+  linkType: hard
+
+"sass@npm:^1.38.1":
+  version: 1.38.1
+  resolution: "sass@npm:1.38.1"
+  dependencies:
+    chokidar: ">=3.0.0 <4.0.0"
+  bin:
+    sass: sass.js
+  checksum: e260889fd9163f68b3916fa69f2b7c99d2980e54e8938ac3a74f6d5a4fe4d0c15450871273286f5abdaecd6e218ff70b70e8f32188203ac6a9f08582fd721b3a
   languageName: node
   linkType: hard
 
