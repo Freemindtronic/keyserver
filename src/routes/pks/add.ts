@@ -27,31 +27,36 @@ export const post: RequestHandler = async ({ body }) => {
 
   // Get the key from the request body
   const armoredKey = body.get('keytext')
-  if (!armoredKey) return { status: 400, body: 'Missing keytext' }
+  if (!armoredKey) return { status: 400, body: 'Missing keytext.' }
 
   // Read the key
   const key = await readKey({ armoredKey })
   const { userID, selfCertifications } = (await key.getPrimaryUser()).user
 
   if (!userID)
-    return { status: 400, body: 'The key does not contain a primary user' }
+    return { status: 400, body: 'The key does not contain a primary user.' }
 
   const { algorithm, bits } = key.getAlgorithmInfo()
   const expirationTime = await key.getExpirationTime()
 
-  await prisma.publicKey.create({
-    data: {
-      fingerprint: key.getFingerprint().toUpperCase(),
-      algo: algoId[algorithm],
-      length: bits,
-      createdAt: key.getCreationTime(),
-      expiredAt: expirationTime instanceof Date ? expirationTime : undefined,
-      revoked:
-        selfCertifications && (await key.isRevoked(selfCertifications[0])),
-      name: userID.name,
-      email: userID.email,
-      comment: userID.comment,
-      armoredKey,
-    },
-  })
+  try {
+    await prisma.publicKey.create({
+      data: {
+        fingerprint: key.getFingerprint().toUpperCase(),
+        algo: algoId[algorithm],
+        length: bits,
+        createdAt: key.getCreationTime(),
+        expiredAt: expirationTime instanceof Date ? expirationTime : undefined,
+        revoked:
+          selfCertifications && (await key.isRevoked(selfCertifications[0])),
+        name: userID.name,
+        email: userID.email,
+        comment: userID.comment,
+        armoredKey,
+      },
+    })
+    return { status: 200, body: 'Key added successfully.' }
+  } catch {
+    return { status: 400, body: 'Key already exists.' }
+  }
 }
