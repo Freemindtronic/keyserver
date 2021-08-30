@@ -7,13 +7,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Key {
-  id          Int      @id @default(autoincrement())
-  fingerprint String   @unique
-  key         String
+model PublicKey {
+  id          Int       @id @default(autoincrement())
+  fingerprint String    @unique
+  algo        Int?
+  length      Int?
+  createdAt   DateTime  @default(now())
+  expiredAt   DateTime?
+  revoked     Boolean   @default(false)
   name        String
   email       String
   comment     String
-  createdAt   DateTime @default(now())
-  expired     Boolean  @default(false)
+  armoredKey  String
 }

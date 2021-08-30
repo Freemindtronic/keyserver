@@ -11,17 +11,33 @@ export const get: RequestHandler = async ({ query }) => {
     }
   }
 
-  const { op, search, options: optionsString = '' } = Object.fromEntries(
-    query.entries()
-  )
-  const options = new Set(optionsString.split(',').filter(Boolean))
+  const { op, search } = Object.fromEntries(query.entries())
 
   const prisma = new PrismaClient()
-  const keys = await prisma.key.findMany()
+  const keys = await prisma.publicKey.findMany()
 
-  return {
-    body: `Operation: ${op}\nSearch terms: ${search}\nOptions: ${
-      options.size > 0 ? [...options.values()].join(', ') : '*none*'
-    }\n${JSON.stringify(keys)}`,
-  }
+  const body = `info:1:${keys.length}\n${keys
+    .map((key) => {
+      const {
+        fingerprint,
+        algo,
+        length,
+        createdAt,
+        expiredAt,
+        revoked,
+        name,
+        comment,
+        email,
+      } = key
+      return `pub:${fingerprint}:${algo ?? ''}:${length ?? ''}:${Math.floor(
+        createdAt.getTime() / 1000
+      )}:${expiredAt ? Math.floor(expiredAt.getTime() / 1000) : ''}:${
+        revoked ? 'r' : ''
+      }\nuid:${escape(name)}${comment ? ` (${escape(comment)})` : ''}${
+        email ? ` <${escape(email)}>` : ''
+      }:::\n`
+    })
+    .join('')}`
+
+  return { body }
 }

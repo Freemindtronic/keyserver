@@ -5,10 +5,11 @@ export const handle: Handle = ({ request, resolve }) => {
   if (!path.startsWith('/pks')) return resolve(request)
 
   const humanReadable =
-    // The user sends a GET request to the /pks/add endpoint...
-    (path === '/pks/add' && method === 'GET') ||
-    // ...or the "mr" option is not explicitly given
-    !query.get('options')?.split(',').includes('mr')
+    path === '/pks/add'
+      ? // The user sends a GET request to the /pks/add endpoint...
+        method === 'GET'
+      : // ...or the "mr" option is not explicitly given
+        !query.get('options')?.split(',').includes('mr')
 
   // Rewrite machine-readable paths to their human-readable equivalents
   if (humanReadable) request.path = path.replace('/pks', '/ui')
