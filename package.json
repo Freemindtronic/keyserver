@@ -2,7 +2,8 @@
   "name": "keyserver",
   "version": "0.0.1",
   "dependencies": {
-    "@prisma/client": "2.30.0"
+    "@prisma/client": "2.30.0",
+    "openpgp": "^5.0.0-6"
   },
   "devDependencies": {
     "@sveltejs/adapter-node": "next",

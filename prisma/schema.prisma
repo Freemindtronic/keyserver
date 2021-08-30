@@ -11,6 +11,9 @@ model Key {
   id          Int      @id @default(autoincrement())
   fingerprint String   @unique
   key         String
+  name        String
+  email       String
+  comment     String
   createdAt   DateTime @default(now())
   expired     Boolean  @default(false)
 }
