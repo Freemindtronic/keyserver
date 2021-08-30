@@ -31,6 +31,12 @@ export const post: RequestHandler = async ({ body }) => {
 
   // Read the key
   const key = await readKey({ armoredKey })
+  if (key.isPrivate())
+    return {
+      status: 400,
+      body: 'Please provide a public key, and keep this private key safe.',
+    }
+
   const { userID, selfCertifications } = (await key.getPrimaryUser()).user
 
   if (!userID)
