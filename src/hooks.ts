@@ -1,17 +1,16 @@
 import type { Handle } from '@sveltejs/kit'
 
-export const handle: Handle = async ({ request, resolve }) => {
-  if (!request.path.startsWith('/pks')) return resolve(request)
+export const handle: Handle = ({ request, resolve }) => {
+  const { query, method, path } = request
+  if (!path.startsWith('/pks')) return resolve(request)
 
-  if (request.path === '/pks/add') {
-    if (request.method === 'GET')
-      request.path = request.path.replace('/pks', '/ui')
-    return resolve(request)
-  }
+  const humanReadable =
+    // The user sends a GET request to the /pks/add endpoint...
+    (path === '/pks/add' && method === 'GET') ||
+    // ...or the "mr" option is not explicitly given
+    !query.get('options')?.split(',').includes('mr')
 
   // Rewrite machine-readable paths to their human-readable equivalents
-  const { query } = request
-  const humanReadable = !query.get('options')?.split(',').includes('mr') ?? true
-  if (humanReadable) request.path = request.path.replace('/pks', '/ui')
+  if (humanReadable) request.path = path.replace('/pks', '/ui')
   return resolve(request)
 }

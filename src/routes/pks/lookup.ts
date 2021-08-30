@@ -17,8 +17,7 @@ export const get: RequestHandler = async ({ query }) => {
   const options = new Set(optionsString.split(',').filter(Boolean))
 
   const prisma = new PrismaClient()
-  const keys = await prisma.keys.findMany()
-  prisma.$disconnect()
+  const keys = await prisma.key.findMany()
 
   return {
     body: `Operation: ${op}\nSearch terms: ${search}\nOptions: ${
