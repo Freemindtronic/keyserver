@@ -1,6 +1,8 @@
 import type { RequestHandler } from '@sveltejs/kit'
 import { PrismaClient } from '@prisma/client'
 
+const prisma = new PrismaClient()
+
 export const get: RequestHandler = async ({ query }) => {
   if (!query.has('op') || !query.has('search')) {
     return {
@@ -13,7 +15,6 @@ export const get: RequestHandler = async ({ query }) => {
 
   const { op, search } = Object.fromEntries(query.entries())
 
-  const prisma = new PrismaClient()
   const keys = await prisma.publicKey.findMany()
 
   const body = `info:1:${keys.length}\n${keys

@@ -2,6 +2,8 @@ import type { RequestHandler } from '@sveltejs/kit'
 import { PrismaClient } from '@prisma/client'
 import { readKey } from 'openpgp'
 
+const prisma = new PrismaClient()
+
 enum algoId {
   rsaEncryptSign = 1,
   rsaEncrypt = 2,
@@ -36,8 +38,6 @@ export const post: RequestHandler = async ({ body }) => {
 
   const { algorithm, bits } = key.getAlgorithmInfo()
   const expirationTime = await key.getExpirationTime()
-
-  const prisma = new PrismaClient()
 
   await prisma.publicKey.create({
     data: {
