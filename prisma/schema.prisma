@@ -7,8 +7,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model keys {
-  id          Int     @id @default(autoincrement())
-  fingerprint String? @unique
-  key         Bytes?
+model Key {
+  id          Int      @id @default(autoincrement())
+  fingerprint String   @unique
+  key         String
+  createdAt   DateTime @default(now())
+  expired     Boolean  @default(false)
 }
