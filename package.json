@@ -27,7 +27,7 @@
     "build": "svelte-kit build",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
-    "dev": "svelte-kit dev --host",
+    "dev": "svelte-kit dev --host --port 11371",
     "format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. src",
     "lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. src && eslint --ignore-path .gitignore .",
     "preview": "svelte-kit preview"
