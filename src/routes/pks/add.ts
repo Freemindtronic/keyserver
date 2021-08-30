@@ -56,10 +56,10 @@ export const post: RequestHandler = async ({ body }) => {
     revoked: selfCertifications && (await key.isRevoked(selfCertifications[0])),
     armoredKey,
     users: {
-      connectOrCreate: key.users
+      create: key.users
         .map(({ userID }) => userID?.userID)
         .filter((x): x is string => Boolean(x))
-        .map((id) => ({ where: { id }, create: { id } })),
+        .map((description) => ({ description })),
     },
   }
 
@@ -68,4 +68,6 @@ export const post: RequestHandler = async ({ body }) => {
     update: publicKey,
     where: { fingerprint },
   })
+
+  return { status: 200, body: 'Key added successfully' }
 }

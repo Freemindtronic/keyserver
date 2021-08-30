@@ -20,7 +20,8 @@ model PublicKey {
 }
 
 model User {
-  id    String    @id
-  keyId Int
-  key   PublicKey @relation(fields: [keyId], references: [id])
+  id          Int       @id @default(autoincrement())
+  keyId       Int
+  description String
+  PublicKey   PublicKey @relation(fields: [keyId], references: [id])
 }
