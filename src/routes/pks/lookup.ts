@@ -30,13 +30,16 @@ export const get: RequestHandler = async ({ query }) => {
         comment,
         email,
       } = key
-      return `pub:${fingerprint}:${algo ?? ''}:${length ?? ''}:${Math.floor(
-        createdAt.getTime() / 1000
-      )}:${expiredAt ? Math.floor(expiredAt.getTime() / 1000) : ''}:${
-        revoked ? 'r' : ''
-      }\nuid:${escape(name)}${comment ? ` (${escape(comment)})` : ''}${
-        email ? ` <${escape(email)}>` : ''
-      }:::\n`
+      return (
+        `pub:${fingerprint}:${algo ?? ''}:${length ?? ''}:${Math.floor(
+          createdAt.getTime() / 1000
+        )}:${expiredAt ? Math.floor(expiredAt.getTime() / 1000) : ''}:${
+          revoked ? 'r' : ''
+        }${expiredAt && expiredAt < new Date() ? 'e' : ''}\n` +
+        `uid:${escape(name)}${comment ? ` (${escape(comment)})` : ''}${
+          email ? ` <${escape(email)}>` : ''
+        }:::\n`
+      )
     })
     .join('')}`
 
