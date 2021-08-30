@@ -15,8 +15,12 @@ model PublicKey {
   createdAt   DateTime  @default(now())
   expiredAt   DateTime?
   revoked     Boolean   @default(false)
-  name        String
-  email       String
-  comment     String
   armoredKey  String
+  users       User[]
+}
+
+model User {
+  id    String    @id
+  keyId Int
+  key   PublicKey @relation(fields: [keyId], references: [id])
 }

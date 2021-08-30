@@ -31,6 +31,8 @@ export const post: RequestHandler = async ({ body }) => {
 
   // Read the key
   const key = await readKey({ armoredKey })
+  const fingerprint = key.getFingerprint().toLowerCase()
+
   if (key.isPrivate())
     return {
       status: 400,
@@ -45,24 +47,25 @@ export const post: RequestHandler = async ({ body }) => {
   const { algorithm, bits } = key.getAlgorithmInfo()
   const expirationTime = await key.getExpirationTime()
 
-  try {
-    await prisma.publicKey.create({
-      data: {
-        fingerprint: key.getFingerprint().toUpperCase(),
-        algo: algoId[algorithm],
-        length: bits,
-        createdAt: key.getCreationTime(),
-        expiredAt: expirationTime instanceof Date ? expirationTime : undefined,
-        revoked:
-          selfCertifications && (await key.isRevoked(selfCertifications[0])),
-        name: userID.name,
-        email: userID.email,
-        comment: userID.comment,
-        armoredKey,
-      },
-    })
-    return { status: 200, body: 'Key added successfully.' }
-  } catch {
-    return { status: 400, body: 'Key already exists.' }
+  const publicKey = {
+    fingerprint,
+    algo: algoId[algorithm],
+    length: bits,
+    createdAt: key.getCreationTime(),
+    expiredAt: expirationTime instanceof Date ? expirationTime : undefined,
+    revoked: selfCertifications && (await key.isRevoked(selfCertifications[0])),
+    armoredKey,
+    users: {
+      connectOrCreate: key.users
+        .map(({ userID }) => userID?.userID)
+        .filter((x): x is string => Boolean(x))
+        .map((id) => ({ where: { id }, create: { id } })),
+    },
   }
+
+  await prisma.publicKey.upsert({
+    create: publicKey,
+    update: publicKey,
+    where: { fingerprint },
+  })
 }

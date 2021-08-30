@@ -15,7 +15,7 @@ export const get: RequestHandler = async ({ query }) => {
 
   const { op, search } = Object.fromEntries(query.entries())
 
-  const keys = await prisma.publicKey.findMany()
+  const keys = await prisma.publicKey.findMany({ include: { users: true } })
 
   const body = `info:1:${keys.length}\n${keys
     .map((key) => {
@@ -26,9 +26,7 @@ export const get: RequestHandler = async ({ query }) => {
         createdAt,
         expiredAt,
         revoked,
-        name,
-        comment,
-        email,
+        users,
       } = key
       return (
         `pub:${fingerprint}:${algo ?? ''}:${length ?? ''}:${Math.floor(
@@ -36,9 +34,7 @@ export const get: RequestHandler = async ({ query }) => {
         )}:${expiredAt ? Math.floor(expiredAt.getTime() / 1000) : ''}:${
           revoked ? 'r' : ''
         }${expiredAt && expiredAt < new Date() ? 'e' : ''}\n` +
-        `uid:${escape(name)}${comment ? ` (${escape(comment)})` : ''}${
-          email ? ` <${escape(email)}>` : ''
-        }:::\n`
+        users.map(({ id }) => `uid:${id.replace(/:/g, '%3A')}:::\n`).join('')
       )
     })
     .join('')}`
