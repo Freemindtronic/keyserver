@@ -20,17 +20,15 @@
 
   export let data: string
 
-  enum algoId {
-    rsaEncryptSign = 1,
-    rsaEncrypt = 2,
-    rsaSign = 3,
-    elgamal = 16,
-    dsa = 17,
-    ecdh = 18,
-    ecdsa = 19,
-    eddsa = 22,
-    aedh = 23,
-    aedsa = 24,
+  const algoId: Record<number, string> = {
+    1: 'RSA (ES)',
+    2: 'RSA (E)',
+    3: 'RSA (S)',
+    16: 'ElGamal',
+    17: 'DSA',
+    18: 'ECDH',
+    19: 'ECDSA',
+    22: 'EdDSA',
   }
 
   let keys: Array<PublicKey & { users: User[] }> = []
@@ -71,28 +69,97 @@
 
 <h1>Search results</h1>
 {#each keys as key (key.id)}
-  <h2>
-    <a href="?op=get&search=0x{key.fingerprint}"
-      >{key.fingerprint.toUpperCase()}</a
-    >
-  </h2>
-  <p>
-    {key.algo ? algoId[key.algo] : 'unknown'}
-    {key.length} / Created at {key.createdAt} / Expires at {key.expiredAt ===
-    null
-      ? 'never'
-      : key.expiredAt}
-  </p>
-  <ul>
-    {#each key.users as user (user.id)}
-      <li>{user.description}</li>
-    {/each}
-  </ul>
+  <section>
+    <h2>
+      <a href="?op=index&search={key.users[0].description}"
+        >{key.users[0].description}</a
+      >
+    </h2>
+    {#if key.users.length > 1}
+      <p class="users"><strong class="label">Other users:</strong></p>
+      <ul class="user-list">
+        {#each key.users.slice(1) as user (user.id)}
+          <li>{user.description}</li>
+        {/each}
+      </ul>
+    {/if}
+    <p>
+      <strong class="label">Fingerprint:</strong>
+      <a href="?op=get&search=0x{key.fingerprint}">
+        {key.fingerprint.toUpperCase()}
+      </a>
+      {#if key.revoked}<strong class="revoked">(REVOKED)</strong>{/if}
+    </p>
+    <div class="details">
+      <p>
+        <strong class="label">Algorithm:</strong>
+        {key.algo ? algoId[key.algo] : 'Unknown'}
+        {key.length ? `${key.length} bits` : ''}
+      </p>
+      <p>
+        <strong class="label">Created: </strong>
+        {key.createdAt.toLocaleDateString()}
+      </p>
+      <p>
+        <strong class="label">Expires: </strong>
+        {key.expiredAt === null ? 'Never' : key.expiredAt.toLocaleDateString()}
+      </p>
+    </div>
+  </section>
+{:else}
+  <p>No results found.</p>
 {/each}
 
-<style>
-  p {
-    padding: 0 1em;
-    white-space: pre-line;
+<style lang="scss">
+  section {
+    margin-block-end: 2em;
+    border-radius: 4px;
+    box-shadow: 0 0 4px #bbb;
+    padding: 1em;
+
+    > h2 {
+      margin: 0 0 1rem;
+    }
+  }
+
+  a {
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .users {
+    margin: 0;
+  }
+
+  .user-list {
+    margin: 0 0 0.5rem;
+  }
+
+  .details {
+    display: flex;
+    gap: 1rem;
+
+    > p {
+      flex: 1;
+      margin: 0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 0.5rem;
+      background-color: #fff;
+    }
+  }
+
+  .label {
+    display: block;
+    color: #333;
+    text-transform: uppercase;
+    font-size: 0.75em;
+    font-weight: bold;
+  }
+
+  .revoked {
+    color: #800;
   }
 </style>

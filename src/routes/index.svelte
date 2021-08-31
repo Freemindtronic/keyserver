@@ -22,7 +22,6 @@
     </li>
     <li>Terms starting with <kbd>0x</kbd> are matched against fingerprints.</li>
   </ul>
-  <p />
 </form>
 
 <style lang="scss">
