@@ -33,5 +33,9 @@
     "lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. src && eslint --ignore-path .gitignore .",
     "preview": "svelte-kit preview"
   },
-  "type": "module"
+  "type": "module",
+  "volta": {
+    "node": "16.8.0",
+    "yarn": "1.22.11"
+  }
 }
