@@ -103,6 +103,9 @@
       <p>
         <strong class="label">Expires: </strong>
         {key.expiredAt === null ? 'Never' : key.expiredAt.toLocaleDateString()}
+        {#if key.expiredAt && key.expiredAt < new Date()}
+          <strong class="revoked">(EXPIRED)</strong>
+        {/if}
       </p>
     </div>
   </section>
