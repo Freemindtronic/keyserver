@@ -115,6 +115,7 @@
 
 <style lang="scss">
   section {
+    margin: 1em;
     margin-block-end: 2em;
     border-radius: 4px;
     box-shadow: 0 0 4px #bbb;
