@@ -51,8 +51,8 @@
           fingerprint: parts[1],
           algo: Number(parts[2]),
           length: Number(parts[3]),
-          createdAt: new Date(parts[4]),
-          expiredAt: parts[5] === '' ? null : new Date(parts[5]),
+          createdAt: new Date(Number(parts[4]) * 1000),
+          expiredAt: parts[5] === '' ? null : new Date(Number(parts[5]) * 1000),
           revoked: parts[6].includes('r'),
           users: [],
           armoredKey: '',
@@ -70,7 +70,11 @@
 </script>
 
 {#each keys as key (key.id)}
-  <h2><a href="?op=get&search=0x{key.fingerprint}">{key.fingerprint}</a></h2>
+  <h2>
+    <a href="?op=get&search=0x{key.fingerprint}"
+      >{key.fingerprint.toUpperCase()}</a
+    >
+  </h2>
   <p>
     {key.algo ? algoId[key.algo] : 'unknown'}
     {key.length} / Created at {key.createdAt} / Expires at {key.expiredAt ===

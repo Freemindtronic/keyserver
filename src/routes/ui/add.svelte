@@ -17,42 +17,30 @@
   }
 </script>
 
-<main>
-  <h1>Add (or update) a key</h1>
-  <form on:submit|preventDefault={send}>
-    <p>
-      <label for="keytext">Armored (base64) key:</label>
-    </p>
-    <p>
-      <textarea
-        id="keytext"
-        placeholder="-----BEGIN PGP PUBLIC KEY BLOCK-----
+<h1>Add (or update) a key</h1>
+<form on:submit|preventDefault={send}>
+  <p>
+    <label for="keytext">Armored (base64) key:</label>
+  </p>
+  <p>
+    <textarea
+      id="keytext"
+      placeholder="-----BEGIN PGP PUBLIC KEY BLOCK-----
 
 ..."
-        rows="12"
-        bind:value={keytext}
-      />
-    </p>
-    <p>
-      <button type="submit">Add</button>
-    </p>
-    {#if result}
-      <p class:success class:error={!success}>{result}</p>
-    {/if}
-  </form>
-</main>
+      rows="12"
+      bind:value={keytext}
+    />
+  </p>
+  <p>
+    <button type="submit">Add</button>
+  </p>
+  {#if result}
+    <p class:success class:error={!success}>{result}</p>
+  {/if}
+</form>
 
 <style lang="scss">
-  main {
-    max-width: 600px;
-    margin: 1rem auto;
-    padding: 0 1rem;
-    overflow: hidden;
-    background-color: #fff;
-    border-radius: 2px;
-    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
-  }
-
   textarea {
     box-sizing: border-box;
     width: 100%;

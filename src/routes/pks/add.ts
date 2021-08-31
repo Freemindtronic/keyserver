@@ -1,3 +1,8 @@
+/**
+ * @see https://datatracker.ietf.org/doc/html/draft-shaw-openpgp-hkp-00
+ * @module
+ */
+
 import type { RequestHandler } from '@sveltejs/kit'
 import { PrismaClient } from '@prisma/client'
 import { readKey } from 'openpgp'
@@ -17,6 +22,7 @@ enum algoId {
   aedsa = 24,
 }
 
+/** Answers to POST request. */
 export const post: RequestHandler = async ({ body }) => {
   if (!body || typeof body !== 'object' || !('get' in body)) {
     return {
@@ -33,20 +39,23 @@ export const post: RequestHandler = async ({ body }) => {
   const key = await readKey({ armoredKey })
   const fingerprint = key.getFingerprint().toLowerCase()
 
-  if (key.isPrivate())
+  // Ensure the key is public
+  if (key.isPrivate()) {
     return {
       status: 400,
       body: 'Please provide a public key, and keep this private key safe.',
     }
+  }
 
   const { userID, selfCertifications } = (await key.getPrimaryUser()).user
 
-  if (!userID)
+  if (!userID || selfCertifications.length === 0)
     return { status: 400, body: 'The key does not contain a primary user.' }
 
   const { algorithm, bits } = key.getAlgorithmInfo()
   const expirationTime = await key.getExpirationTime()
 
+  // Produce the data to store in the database
   const publicKey = {
     fingerprint,
     algo: algoId[algorithm],
@@ -63,6 +72,7 @@ export const post: RequestHandler = async ({ body }) => {
     },
   }
 
+  // Either update or create the key
   await prisma.publicKey.upsert({
     create: publicKey,
     update: publicKey,

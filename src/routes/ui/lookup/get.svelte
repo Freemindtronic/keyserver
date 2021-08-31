@@ -19,5 +19,4 @@
   export let data: string
 </script>
 
-<h1>Public keys</h1>
 <pre>{data}</pre>
