@@ -70,7 +70,7 @@
 </script>
 
 {#each keys as key (key.id)}
-  <h2>{key.fingerprint}</h2>
+  <h2><a href="?op=get&search=0x{key.fingerprint}">{key.fingerprint}</a></h2>
   <p>
     {key.algo ? algoId[key.algo] : 'unknown'}
     {key.length} / Created at {key.createdAt} / Expires at {key.expiredAt ===
