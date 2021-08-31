@@ -69,6 +69,7 @@
   }
 </script>
 
+<h1>Search results</h1>
 {#each keys as key (key.id)}
   <h2>
     <a href="?op=get&search=0x{key.fingerprint}"

@@ -42,7 +42,7 @@ export const get: RequestHandler = async ({ query }) => {
             // Terms are ORed together
             OR: terms.map((term) =>
               term.startsWith('0x')
-                ? { fingerprint: term.slice(2) }
+                ? { fingerprint: term.slice(2).toLowerCase() }
                 : {
                     users: { some: { description: { contains: term } } },
                   }
@@ -85,6 +85,8 @@ export const get: RequestHandler = async ({ query }) => {
 
   // If the operation is `get`, return all matching keys as a PGP packet
   else {
+    if (keys.length === 0) return { status: 404, body: 'No keys found' }
+
     const packetList = new PacketList()
     for await (const key of keys.map(({ armoredKey }) =>
       readKey({ armoredKey })

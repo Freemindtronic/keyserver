@@ -12,7 +12,17 @@
       output
     </label>
   </p>
-  <p>Leave the search field empty to list all public keys.</p>
+  <h2>Search tips</h2>
+  <ul>
+    <li>Leave the search field empty to list all public keys.</li>
+    <li>
+      Comma-separated terms are understood by the search engine: <kbd
+        >john@example.com,john@example.org</kbd
+      >.
+    </li>
+    <li>Terms starting with <kbd>0x</kbd> are matched against fingerprints.</li>
+  </ul>
+  <p />
 </form>
 
 <style lang="scss">
