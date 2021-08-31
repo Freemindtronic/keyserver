@@ -2,7 +2,7 @@
 
 <style lang="scss">
   main {
-    max-width: 600px;
+    max-width: 800px;
     margin: 1rem auto;
     padding: 0 1rem;
     overflow: hidden;

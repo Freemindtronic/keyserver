@@ -22,7 +22,7 @@
   {:else}
     <h1>500 Internal server error</h1>
   {/if}
-  <a href="/">Homepage</a>
+  <p><a href="/">Homepage</a></p>
 </main>
 
 <style lang="scss">
