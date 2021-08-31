@@ -12,16 +12,8 @@
       output
     </label>
   </p>
+  <p>Leave the search field empty to list all public keys.</p>
 </form>
-<footer>
-  <p>
-    You are on a semi-private <a
-      href="https://en.wikipedia.org/wiki/Key_server_(cryptographic)"
-      >key server</a
-    >: keys can be browsed but not added. Leave the search field empty to list
-    all public keys.
-  </p>
-</footer>
 
 <style lang="scss">
   form > p {
@@ -39,11 +31,5 @@
     padding: 0.5rem;
     border-radius: 4px;
     border: 1px solid #888;
-  }
-
-  footer {
-    border-top: 1px solid #ccc;
-    color: #666;
-    font-style: italic;
   }
 </style>
