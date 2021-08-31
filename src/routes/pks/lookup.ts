@@ -4,10 +4,10 @@
  */
 
 import type { RequestHandler } from '@sveltejs/kit'
-import { PrismaClient } from '@prisma/client'
+import pkg from '@prisma/client'
 import { armor, enums, PacketList, readKey } from 'openpgp'
 
-const prisma = new PrismaClient()
+const prisma = new pkg.PrismaClient()
 
 /** Answers to GET requests. */
 export const get: RequestHandler = async ({ query }) => {
