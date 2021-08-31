@@ -4,8 +4,9 @@
  */
 
 import type { RequestHandler } from '@sveltejs/kit'
-import { prisma } from '$lib/prisma'
 import { readKey } from 'openpgp'
+import { prisma } from '$lib/prisma'
+import { getKeys } from '$lib/keys'
 
 enum algoId {
   rsaEncryptSign = 1,
@@ -52,6 +53,19 @@ export const post: RequestHandler = async ({ body }) => {
 
     const { algorithm, bits } = key.getAlgorithmInfo()
     const expirationTime = await key.getExpirationTime()
+
+    // Load all main keys in parallel
+    const mainKeys = await getKeys()
+
+    const verification = await key.verifyAllUsers(mainKeys)
+    console.log(verification)
+
+    if (verification.filter(({ valid }) => valid).length < key.users.length) {
+      return {
+        status: 400,
+        body: `The key has to be verified for all users.`,
+      }
+    }
 
     // Produce the data to store in the database
     const publicKey = {
