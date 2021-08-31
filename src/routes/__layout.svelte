@@ -12,6 +12,27 @@
 </main>
 
 <style lang="scss">
+  :global {
+    *,
+    ::before,
+    ::after {
+      box-sizing: inherit;
+    }
+    :root {
+      box-sizing: border-box;
+    }
+    body {
+      // Source: https://unpkg.com/sanitize.css@12.0.1/typography.css
+      font-family: system-ui, -apple-system, 'Segoe UI', 'Roboto', 'Ubuntu',
+        'Cantarell', 'Noto Sans', sans-serif;
+      background-color: #eee;
+      margin: 0;
+    }
+    h1 {
+      text-align: center;
+    }
+  }
+
   main {
     max-width: 800px;
     margin: 1rem auto;

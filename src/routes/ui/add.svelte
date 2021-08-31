@@ -42,7 +42,6 @@
 
 <style lang="scss">
   textarea {
-    box-sizing: border-box;
     width: 100%;
     resize: vertical;
   }
