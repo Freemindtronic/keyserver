@@ -6,3 +6,5 @@ services:
       - '11371:11371'
     volumes:
       - './storage:/app/storage'
+    # If the database does not exist, create it
+    command: sh -c 'test -f storage/keys.db || yarn prisma db push; node build'

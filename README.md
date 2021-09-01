@@ -2,7 +2,7 @@
 
 Nodes.js implementation of the [OpenPGP HTTP Keyserver Protocol (HKP)](https://datatracker.ietf.org/doc/html/draft-shaw-openpgp-hkp-00).
 
-## How to use
+## Contributing
 
 If the machine does not have Node or Yarn installed, install [Volta](https://volta.sh/) first, and it will install Node and Yarn for you.
 
@@ -11,12 +11,16 @@ If the machine does not have Node or Yarn installed, install [Volta](https://vol
 yarn install --immutable
 
 # Create an empty database
-yarn prisma migrate reset
+yarn prisma db push
 
 # Start the dev server
 yarn dev
+```
 
-# Or start the production server
+## Usage in production
+
+```bash
+# Install dependencies, create a database if it does not exist, and start the server
 docker-compose up
 ```
 
