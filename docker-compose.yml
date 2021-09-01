@@ -1,0 +1,8 @@
+version: '3.9'
+services:
+  web:
+    build: .
+    ports:
+      - '11371:11371'
+    volumes:
+      - './storage:/app/storage'

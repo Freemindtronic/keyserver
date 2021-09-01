@@ -24,8 +24,8 @@
   <li>Terms starting with <kbd>0x</kbd> are matched against fingerprints.</li>
 </ul>
 <p>
-  <a href="/pks/add">Add (or update) a key</a>: please note that signed keys
-  only are accepted.
+  <a href="/pks/add">Add (or update) a key</a>: please note that
+  <strong>only signed keys are accepted.</strong>
 </p>
 
 <style lang="scss">

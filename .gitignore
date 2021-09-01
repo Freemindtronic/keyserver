@@ -113,6 +113,3 @@ dist
 /build
 /.svelte-kit
 /package
-
-# Database
-keys.db
