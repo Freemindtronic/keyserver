@@ -38,6 +38,10 @@
   {#if result}
     <p class:success class:error={!success}>{result}</p>
   {/if}
+  <p>
+    <strong>Note:</strong> only keys signed with our trusted key are accepted. All
+    others will be refused.
+  </p>
 </form>
 
 <style lang="scss">

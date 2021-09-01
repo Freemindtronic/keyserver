@@ -12,17 +12,21 @@
       output
     </label>
   </p>
-  <h2>Search tips</h2>
-  <ul>
-    <li>Leave the search field empty to list all public keys.</li>
-    <li>
-      Comma-separated terms are understood by the search engine: <kbd
-        >john@example.com,john@example.org</kbd
-      >.
-    </li>
-    <li>Terms starting with <kbd>0x</kbd> are matched against fingerprints.</li>
-  </ul>
 </form>
+<h2>Search tips</h2>
+<ul>
+  <li>Leave the search field empty to list all public keys.</li>
+  <li>
+    Comma-separated terms are understood by the search engine: <kbd
+      >john@example.com,john@example.org</kbd
+    >.
+  </li>
+  <li>Terms starting with <kbd>0x</kbd> are matched against fingerprints.</li>
+</ul>
+<p>
+  <a href="/pks/add">Add (or update) a key</a>: please note that signed keys
+  only are accepted.
+</p>
 
 <style lang="scss">
   form > p {
