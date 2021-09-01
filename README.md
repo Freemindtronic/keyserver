@@ -1,12 +1,12 @@
 # keyserver
 
-Nodes.js implementation of the OpenPGP HTTP Keyserver Protocol (HKP)
+Nodes.js implementation of the [OpenPGP HTTP Keyserver Protocol (HKP)](https://datatracker.ietf.org/doc/html/draft-shaw-openpgp-hkp-00).
 
 ## How to use
 
 If the machine does not have Node or Yarn installed, install [Volta](https://volta.sh/) first, and it will install Node and Yarn for you.
 
-```
+```bash
 # Install dependencies
 yarn install --immutable
 
