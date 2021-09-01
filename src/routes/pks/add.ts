@@ -57,13 +57,23 @@ export const post: RequestHandler = async ({ body }) => {
     // Load all main keys in parallel
     const mainKeys = await getKeys()
 
-    const verification = await key.verifyAllUsers(mainKeys)
-    console.log(verification)
+    // Check that all users are signed by at least one main key
+    const signatures = await key.verifyAllUsers(mainKeys)
+    const notSignedUsers = new Set<string>(
+      key.users
+        .map(({ userID }) => userID?.userID)
+        .filter((x): x is string => Boolean(x))
+    )
 
-    if (verification.filter(({ valid }) => valid).length < key.users.length) {
+    for (const signature of signatures)
+      if (signature.valid) notSignedUsers.delete(signature.userID)
+
+    if (notSignedUsers.size > 0) {
       return {
         status: 400,
-        body: `The key has to be verified for all users.`,
+        body: `The key has to be signed for all users. User(s) not signed: ${[
+          ...notSignedUsers,
+        ].join(', ')}.`,
       }
     }
 
@@ -92,11 +102,11 @@ export const post: RequestHandler = async ({ body }) => {
       where: { fingerprint },
     })
 
-    return { status: 200, body: 'Key added successfully' }
+    return { status: 200, body: 'Key added successfully.' }
   } catch (error: unknown) {
     return {
       status: 400,
-      body: error instanceof Error ? error.message : 'Unknown error',
+      body: error instanceof Error ? error.message : 'Unknown error.',
     }
   }
 }
