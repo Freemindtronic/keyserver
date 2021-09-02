@@ -18,7 +18,7 @@
 </script>
 
 <svelte:head>
-  <title>Public key</title>
+  <title>Add a key</title>
 </svelte:head>
 
 <h1>Add (or update) a key</h1>
