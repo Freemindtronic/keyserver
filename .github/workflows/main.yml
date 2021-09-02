@@ -1,0 +1,31 @@
+name: Test
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: volta-cli/action@v1
+      - name: Cache
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            .yarn
+            node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+      - name: Install
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn install --immutable
+      - name: Lint
+        run: yarn lint
+      - name: Check
+        run: yarn check
