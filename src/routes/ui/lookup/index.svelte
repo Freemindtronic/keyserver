@@ -70,6 +70,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>Search results</title>
+</svelte:head>
+
 <h1>Search results</h1>
 {#each keys as key (key.id)}
   <section>

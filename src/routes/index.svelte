@@ -2,6 +2,10 @@
   export const hydrate = false
 </script>
 
+<svelte:head>
+  <title>Keyserver</title>
+</svelte:head>
+
 <h1>Keyserver</h1>
 <form action="/pks/lookup">
   <input type="hidden" name="op" value="index" />

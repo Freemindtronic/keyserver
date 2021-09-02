@@ -22,5 +22,9 @@
   export let data: string
 </script>
 
+<svelte:head>
+  <title>Public key</title>
+</svelte:head>
+
 <h1>Public key results</h1>
 <pre>{data}</pre>
