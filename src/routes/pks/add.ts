@@ -7,6 +7,9 @@ import type { RequestHandler } from '@sveltejs/kit'
 import { readKey } from 'openpgp'
 import { prisma } from '$lib/prisma'
 import { getKeys } from '$lib/keys'
+import debug from 'debug'
+
+const log = debug('keyserver:add')
 
 enum algoId {
   rsaEncryptSign = 1,
@@ -38,8 +41,11 @@ export const post: RequestHandler = async ({ body }) => {
     const key = await readKey({ armoredKey })
     const fingerprint = key.getFingerprint().toLowerCase()
 
+    log('Key submitted: %s', fingerprint)
+
     // Ensure the key is public
     if (key.isPrivate()) {
+      log('Key refused because private')
       return {
         status: 400,
         body: 'Please provide a public key, and keep this private key safe.',
@@ -48,8 +54,10 @@ export const post: RequestHandler = async ({ body }) => {
 
     const { userID, selfCertifications } = (await key.getPrimaryUser()).user
 
-    if (!userID || selfCertifications.length === 0)
+    if (!userID || selfCertifications.length === 0) {
+      log('Key refused because it has no users')
       return { status: 400, body: 'The key does not contain a primary user.' }
+    }
 
     const { algorithm, bits } = key.getAlgorithmInfo()
     const expirationTime = await key.getExpirationTime()
@@ -69,6 +77,7 @@ export const post: RequestHandler = async ({ body }) => {
       if (signature.valid) notSignedUsers.delete(signature.userID)
 
     if (notSignedUsers.size > 0) {
+      log('Key refused because all users have to be signed')
       return {
         status: 400,
         body: `The key has to be signed for all users. User(s) not signed: ${[
@@ -102,8 +111,13 @@ export const post: RequestHandler = async ({ body }) => {
       where: { fingerprint },
     })
 
+    log('Key added successfully')
     return { status: 200, body: 'Key added successfully.' }
   } catch (error: unknown) {
+    log(
+      'Key refused because of an error: %s',
+      error instanceof Error ? error.message : error
+    )
     return {
       status: 400,
       body: error instanceof Error ? error.message : 'Unknown error.',

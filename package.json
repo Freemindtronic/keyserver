@@ -3,12 +3,14 @@
   "version": "0.0.1",
   "dependencies": {
     "@prisma/client": "2.30.2",
+    "debug": "^4.3.2",
     "fast-glob": "^3.2.7",
     "openpgp": "^5.0.0-6"
   },
   "devDependencies": {
     "@sveltejs/adapter-node": "next",
     "@sveltejs/kit": "next",
+    "@types/debug": "^4.1.7",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
     "eslint": "^7.32.0",

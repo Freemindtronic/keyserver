@@ -6,6 +6,9 @@
 import type { RequestHandler } from '@sveltejs/kit'
 import { prisma } from '$lib/prisma'
 import { armor, enums, PacketList, readKey } from 'openpgp'
+import debug from 'debug'
+
+const log = debug('keyserver:lookup')
 
 /** Answers to GET requests. */
 export const get: RequestHandler = async ({ query }) => {
@@ -50,6 +53,8 @@ export const get: RequestHandler = async ({ query }) => {
     // Limit to 1000 results, just in case
     take: 1000,
   })
+
+  log('Received a `%s` operation that yielded %s results', op, keys.length)
 
   // If the operation is `index`, return a machine-readable list of keys
   if (op === 'index') {
