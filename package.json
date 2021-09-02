@@ -35,7 +35,7 @@
     "keyserver",
     "pgp"
   ],
-  "license": "AGPL-3.0",
+  "license": "AGPL-3.0-only",
   "main": "build/index.js",
   "packageManager": "yarn@3.0.1",
   "private": true,
