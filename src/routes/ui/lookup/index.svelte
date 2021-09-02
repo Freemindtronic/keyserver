@@ -1,5 +1,8 @@
 <script context="module" lang="ts">
   import type { Load } from '@sveltejs/kit'
+
+  export const hydrate = false
+
   export const load: Load = async ({ page: { query }, fetch }) => {
     query.set(
       'options',
