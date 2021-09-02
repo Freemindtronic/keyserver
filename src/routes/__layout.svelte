@@ -2,10 +2,9 @@
   <slot />
   <footer>
     <p>
-      You are on a semi-private <a
-        href="https://en.wikipedia.org/wiki/Key_server_(cryptographic)"
-        >key server</a
-      >: keys can be browsed but not added.
+      You are on a semi-private
+      <a href="https://github.com/Freemindtronic/keyserver">key server</a>: keys
+      can be browsed but not added.
     </p>
     <p><a href="/">Back to homepage</a></p>
   </footer>
