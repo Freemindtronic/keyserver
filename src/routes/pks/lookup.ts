@@ -25,7 +25,7 @@ export const get: RequestHandler = async ({ query }) => {
   const { op, search } = Object.fromEntries(query.entries())
 
   // Ignore `vindex` and unknown operations
-  if (op !== 'index' && op !== 'get')
+  if (op !== 'index' && op !== 'vindex' && op !== 'get')
     return { status: 501, body: `Unsupported operation: ${op}` }
 
   // Split comma-separated search terms, and remove trailing whitespace
@@ -57,7 +57,7 @@ export const get: RequestHandler = async ({ query }) => {
   log('Received a `%s` operation that yielded %s results', op, keys.length)
 
   // If the operation is `index`, return a machine-readable list of keys
-  if (op === 'index') {
+  if (op === 'index' || op === 'vindex') {
     // info:<version>:<count>
     let body = `info:1:${keys.length}\n`
 
