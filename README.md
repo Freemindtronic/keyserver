@@ -1,6 +1,6 @@
 # keyserver
 
-Nodes.js implementation of the [OpenPGP HTTP Keyserver Protocol (HKP)](https://datatracker.ietf.org/doc/html/draft-shaw-openpgp-hkp-00), with a few modifications:
+Custom Nodes.js implementation of the [OpenPGP HTTP Keyserver Protocol (HKP)](https://datatracker.ietf.org/doc/html/draft-shaw-openpgp-hkp-00), with a few modifications:
 
 - HTTP 1.1 is used instead of HTTP 1.0
 - Search by fingerprint must contain the whole fingerprint
