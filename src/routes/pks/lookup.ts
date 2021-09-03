@@ -89,6 +89,8 @@ export const get: RequestHandler = async ({ query }) => {
   // If the operation is `get`, return all matching keys as a PGP packet
   else {
     if (keys.length === 0) return { status: 404, body: 'No keys found' }
+    // If there is only one key, return the armored key as is
+    else if (keys.length === 1) return { body: keys[0].armoredKey }
 
     const packetList = new PacketList()
     for await (const key of keys.map(({ armoredKey }) =>
